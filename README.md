@@ -1,4 +1,4 @@
-# .
+# Express Scrape Example
 
 IGDB API scrape application, generated using generator-express-no-stress
 
