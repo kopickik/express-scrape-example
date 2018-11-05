@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: 1.0.0
-  title: .
+  title: Express Scrape Example
   description: IGDB API scrape application, generated using generator-express-no-stress
 basePath: /api/v1
 tags:
@@ -14,7 +14,6 @@ consumes:
   - application/json
 produces:
   - application/json
-
 
 definitions:
   ExampleBody:
