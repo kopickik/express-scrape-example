@@ -15,10 +15,11 @@ class ExamplesDatabase {
     return Promise.resolve(this._data[id]);
   }
 
-  insert(name) {
+  insert(body) {
     const record = {
       id: this._counter,
-      name,
+      name: body.name,
+      year: body.year,
     };
 
     this._counter += 1;

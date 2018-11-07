@@ -1,13 +1,13 @@
-import ExamplesService from '../../services/examples.service';
+import GamesService from '../../services/games.service';
 
 export class Controller {
   all(req, res) {
-    ExamplesService.all()
+    GamesService.all()
       .then(r => res.json(r));
   }
 
   byId(req, res) {
-    ExamplesService
+    GamesService
       .byId(req.params.id)
       .then(r => {
         if (r) res.json(r);
@@ -16,7 +16,7 @@ export class Controller {
   }
 
   create(req, res) {
-    ExamplesService
+    GamesService
       .create(req.body)
       .then(r => res
         .status(201)

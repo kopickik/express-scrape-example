@@ -1,7 +1,8 @@
 import l from '../../common/logger';
-import db from './examples.db.service';
+import db from './firebase.db.service';
+import Game from '../models/Game';
 
-class ExamplesService {
+class GamesService {
   all() {
     l.info(`${this.constructor.name}.all()`);
     return db.all();
@@ -17,4 +18,4 @@ class ExamplesService {
   }
 }
 
-export default new ExamplesService();
+export default new GamesService();

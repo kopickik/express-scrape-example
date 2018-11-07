@@ -4,11 +4,16 @@ info:
   title: Express Scrape Example
   description: IGDB API scrape application, generated using generator-express-no-stress
 basePath: /api/v1
+schemes:
+  - https
+
 tags:
   - name: Examples
     description: Simple example endpoints
   - name: Specification
     description: The swagger API specification
+  - name: Games
+    description: Different games modeled in mongoose
 
 consumes:
   - application/json
@@ -25,6 +30,18 @@ definitions:
       name:
         type: string
         example: no_stress
+  Game:
+    type: object
+    title: game
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: Earthbound
+      year:
+        type: string
+        example: "1989"
 
 paths:
   /examples:
@@ -73,3 +90,30 @@ paths:
       responses:
         200:
           description: Return the API specification
+
+  /games:
+    get:
+      tags:
+        - Games
+      responses:
+        200:
+          description: OK
+    post:
+      tags:
+        - Games
+      description: Create a new game
+      parameters:
+        - name: Earthbound
+          in: body
+          description: Title of the game
+          required: true
+          schema:
+            $ref: "#/definitions/Game"
+        - year: "1997"
+          in: body
+          description: Year the game came out
+          schema:
+            $ref: "#/definitions/Game"
+      responses:
+        200:
+          description: OK

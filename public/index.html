@@ -4,19 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <title>
-        .
+        Express Scrape Example
     </title>
 </head>
 
 <body>
     <h1>Welcome to
-        .
+        Express Scrape Example
     </h1>
     <ul>
         <li>
             <h3><a href="/api-explorer/">Interactive API Doc!</a></h3>
         </li>
     </ul>
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBsjZ5DfdxKBHhWUkDH2DPTl-v88qvAAkY",
+    authDomain: "express-scrape-demo.firebaseapp.com",
+    databaseURL: "https://express-scrape-demo.firebaseio.com",
+    projectId: "express-scrape-demo",
+    storageBucket: "express-scrape-demo.appspot.com",
+    messagingSenderId: "607873006499"
+  };
+  firebase.initializeApp(config);
+</script>
 </body>
 
 </html>
