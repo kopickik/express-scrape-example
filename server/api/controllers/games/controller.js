@@ -1,12 +1,15 @@
 import GamesService from '../../services/games.service';
+import l from '../../../common/logger'
 
 export class Controller {
   all(req, res) {
+    l.info(req)
     GamesService.all()
       .then(r => res.json(r));
   }
 
   byId(req, res) {
+    l.info(req)
     GamesService
       .byId(req.params.id)
       .then(r => {
@@ -24,4 +27,5 @@ export class Controller {
         .json(r));
   }
 }
+
 export default new Controller();

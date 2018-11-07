@@ -1,6 +1,5 @@
 import l from '../../common/logger';
 import db from './firebase.db.service';
-import Game from '../models/Game';
 
 class GamesService {
   all() {

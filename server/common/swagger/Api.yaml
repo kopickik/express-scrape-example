@@ -5,7 +5,7 @@ info:
   description: IGDB API scrape application, generated using generator-express-no-stress
 basePath: /api/v1
 schemes:
-  - https
+  - http
 
 tags:
   - name: Examples
@@ -41,7 +41,7 @@ definitions:
         example: Earthbound
       year:
         type: string
-        example: "1989"
+        example: "1994"
 
 paths:
   /examples:
@@ -61,11 +61,13 @@ paths:
           in: body
           description: an example
           required: true
-          schema: 
+          schema:
             $ref: "#/definitions/ExampleBody"
       responses:
         200:
           description: Returns all examples
+        201:
+          description: Content created, empty return body
 
   /examples/{id}:
     get:
@@ -103,17 +105,15 @@ paths:
         - Games
       description: Create a new game
       parameters:
-        - name: Earthbound
+        - name: game
           in: body
-          description: Title of the game
+          description: A videogame
           required: true
-          schema:
-            $ref: "#/definitions/Game"
-        - year: "1997"
-          in: body
-          description: Year the game came out
           schema:
             $ref: "#/definitions/Game"
       responses:
         200:
           description: OK
+        400:
+          description: Bad Request
+

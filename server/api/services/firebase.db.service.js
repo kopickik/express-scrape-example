@@ -1,11 +1,11 @@
 import '../../common/env'
 import l from '../../common/logger'
-import * as mongoose from 'mongoose'
-import * as firebase from 'firebase'
+
+const firebase = require('firebase')
 
 const dbUrl = process.env.FIREBASE_DATABASE_URL
 
-const initializeFirebase = firebase.initializeApp({
+firebase.initializeApp({
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: dbUrl,
@@ -14,8 +14,26 @@ const initializeFirebase = firebase.initializeApp({
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 })
 
-initializeFirebase();
-const db = mongoose.connect(dbUrl);
-const connection = mongoose.connection;
+const db = firebase.database();
 
-db.on('error', l.error('MongoDB connection error'));
+const byId = gameId => db.ref('games', {
+  query: {
+    equalTo: gameId
+  }
+}).on('value', dataSnapshot => dataSnapshot.toJSON())
+
+const all = () => db.ref('games').on('value', data => data.toJSON())
+
+const insert = game => db.ref('games').push(game, (success, err) => {
+  if (err) {
+    l.fatal('Fatal error creating game in Firebase.')
+    return;
+  }
+  l.info('Added game successfully to firebase.', game)
+})
+
+module.exports = {
+  byId,
+  all,
+  insert,
+}
