@@ -3,7 +3,6 @@ import l from '../../../common/logger'
 
 export class Controller {
   all(req, res) {
-    l.info(req)
     GamesService.all()
       .then(r => res.json(r));
   }
