@@ -25,10 +25,16 @@ class FirebaseDatabase {
   all() {
     return new Promise((resolve, reject) => {
       db.ref('games').on('value', snapshot => {
+        const result = _.map(snapshot.val(), game => game)
+        if (this._games === result) {
+          return resolve(this._games, this._loadCounter)
+        }
+        this._loadCounter += 1
         this._games = _.map(snapshot.val(), game => game)
-        return resolve(_.flatten(this._games))
+        l.info(`loadcounter:${this._loadCounter}`)
+        return resolve(this._games, this._loadCounter)
       })
-    }).catch(err => `Something happened:${err}`)
+    }).catch(err => `Something went wrong:${err}`)
   }
 
   byId(id) {
