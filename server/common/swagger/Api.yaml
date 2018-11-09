@@ -116,4 +116,20 @@ paths:
           description: OK
         400:
           description: Bad Request
-
+        201:
+          description: Game created successfully
+  /games/{id}:
+    get:
+      tags:
+        - Games
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          type: string
+      responses:
+        200:
+          description: Game with {id} successfully retrieved
+        404:
+          description: Game with {id} not found

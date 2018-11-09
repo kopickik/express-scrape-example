@@ -18,8 +18,9 @@ const db = firebase.database();
 
 class FirebaseDatabase {
   constructor() {
-    this._games = [];
-    this._loadCounter = 0;
+    this._games = []
+    this._game = {}
+    this._loadCounter = 0
   }
 
   all() {
@@ -30,15 +31,25 @@ class FirebaseDatabase {
           return resolve(this._games, this._loadCounter)
         }
         this._loadCounter += 1
-        this._games = _.map(snapshot.val(), game => game)
-        l.info(`loadcounter:${this._loadCounter}`)
+        this._games = _.map(result)
+        l.info(`loadCounter:${this._loadCounter}`)
         return resolve(this._games, this._loadCounter)
       })
     }).catch(err => `Something went wrong:${err}`)
   }
 
   byId(id) {
-    return Promise.resolve(this._games[id]);
+    return new Promise((resolve, reject) => {
+      try {
+        db.ref(`games/${id}`).once('value', snapshot => {
+          const result = snapshot.val()
+          this._game = result
+          return resolve(this._game)
+        })
+      } catch (e) {
+        return reject(`Error:${e}`)
+      }
+    }).catch(err => `Something went wrong:${err}`)
   }
 
   insert(game) {
