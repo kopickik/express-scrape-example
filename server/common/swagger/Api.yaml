@@ -13,7 +13,7 @@ tags:
   - name: Specification
     description: The swagger API specification
   - name: Games
-    description: Different games modeled in mongoose
+    description: Endpoints dealing with game resources
 
 consumes:
   - application/json

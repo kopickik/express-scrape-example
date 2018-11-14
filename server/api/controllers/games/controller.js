@@ -8,7 +8,6 @@ export class Controller {
   }
 
   byId(req, res) {
-    l.info(req)
     GamesService
       .byId(req.params.id)
       .then(r => {

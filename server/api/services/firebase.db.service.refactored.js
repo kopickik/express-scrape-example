@@ -2,6 +2,7 @@ import l from '../../common/logger'
 
 const _ = require('lodash')
 const firebase = require('firebase')
+const axios = require('axios')
 
 const dbUrl = process.env.FIREBASE_DATABASE_URL
 
@@ -15,41 +16,27 @@ firebase.initializeApp({
 })
 
 const db = firebase.database();
+axios.defaults.baseURL = process.env.FIREBASE_DATABASE_URL
 
 class FirebaseDatabase {
-  constructor() {
-    this._games = []
-    this._game = {}
-    this._loadCounter = 0
-  }
-
   all() {
-    return new Promise((resolve, reject) => {
-      db.ref('games').on('value', snapshot => {
-        const result = _.map(snapshot.val(), game => game)
-        if (this._games === result) {
-          return resolve(this._games, this._loadCounter)
-        }
-        this._loadCounter += 1
-        this._games = _.map(result)
-        l.info(`loadCounter:${this._loadCounter}`)
-        return resolve(this._games, this._loadCounter)
+    return axios.get('games.json?print=pretty')
+      .then(response => {
+        l.info(response.data)
+        return response
       })
-    }).catch(err => `Something went wrong:${err}`)
+      .then(response => [].concat(_.map(response.data)))
+      .catch(err => `Error: ${err}`)
   }
 
   byId(id) {
-    return new Promise((resolve, reject) => {
-      try {
-        db.ref(`games/${id}`).once('value', snapshot => {
-          const result = snapshot.val()
-          this._game = result
-          return resolve(this._game)
-        })
-      } catch (e) {
-        return reject(`Error:${e}`)
-      }
-    }).catch(err => `Something went wrong:${err}`)
+    return axios.get(`games/${id}.json?print=pretty`)
+      .then(response => {
+        console.log(response.data)
+        return response
+      })
+      .then(response => response.data)
+      .catch(err => `Couldn't fetch game with id ${id}, ${err}`)
   }
 
   insert(game) {
