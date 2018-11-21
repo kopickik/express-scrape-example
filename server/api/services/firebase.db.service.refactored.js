@@ -32,7 +32,7 @@ class FirebaseDatabase {
   byId(id) {
     return axios.get(`games/${id}.json?print=pretty`)
       .then(response => {
-        console.log(response.data)
+        l.info(response.data)
         return response
       })
       .then(response => response.data)

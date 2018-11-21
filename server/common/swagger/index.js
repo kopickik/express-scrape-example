@@ -10,7 +10,7 @@ export default function (app, routes) {
 
     app.use(mw.metadata());
     app.use(mw.files({
-      // Override the Express App's case-sensitive 
+      // Override the Express App's case-sensitive
       // and strict-routing settings for the Files middleware.
       caseSensitive: false,
       strict: false,

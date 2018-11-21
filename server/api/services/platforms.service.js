@@ -15,7 +15,7 @@ const axiosOptions = {
 
 class PlatformsService {
   all() {
-    return axios.get('platforms/?order=slug&limit=40&offset=110', axiosOptions)
+    return axios.get('platforms/?order=slug&limit=50&offset=55', axiosOptions)
       .then(response => {
         l.info(response.data)
         return response
@@ -25,15 +25,14 @@ class PlatformsService {
   }
 
   byId(id) {
-    l.info(`${this.constructor.name}.byId(${id})`);
     return axios.get(`platforms/${id}`, axiosOptions)
       .then(response => response.data)
       .then(data => _.first(data))
-      .then(datum => this.generateEvents(datum))
+      .then(datum => this.platformImgGenerated(datum))
       .catch(err => `Issue: ${err}`)
   }
 
-  generateEvents(datum) {
+  platformImgGenerated(datum) {
     const url = datum.logo.url;
     const hiresUrl = url.replace(/t_thumb/, 't_720p')
     this.downloadImage(hiresUrl)
