@@ -42,6 +42,35 @@ definitions:
       year:
         type: string
         example: "1994"
+  GameEngine:
+    type: object
+    title: engine
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: Earthbound
+      logo:
+        type: string
+      logo.url:
+        type: string
+      logo.cloudinary_id:
+        type: string
+      logo.width:
+        type: string
+      logo.height:
+        type: string
+      slug:
+        type: string
+      url:
+        type: string
+      games:
+        type: string
+      platforms:
+        type: string
+      companies:
+        type: string
 
 paths:
   /examples:
@@ -118,10 +147,57 @@ paths:
           description: Bad Request
         201:
           description: Game created successfully
+
   /games/{id}:
     get:
       tags:
         - Games
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the resource to retrieve
+          type: string
+      responses:
+        200:
+          description: Game with {id} successfully retrieved
+        404:
+          description: Game with {id} not found
+
+  /platforms:
+    get:
+      tags:
+        - Game Platforms
+      parameters:
+        - name: order
+          in: path
+          schema:
+            type: string
+          description: Which property should we sort the result set on.  Sort options are e.g. `slug, `
+        - name: limit
+          in: path
+          schema:
+            type: integer
+          description: The number of items to retrieve
+        - name: offset
+          in: path
+          schema:
+            type: integer
+          description: The number of items to skip before starting to collect the result set
+      responses:
+        200:
+          description: Platforms with {order, limit, offset} returned successfully
+        400:
+          description: Some other client issue
+        403:
+          description: Not credentialed
+        404:
+          description: Not found
+
+  /platforms/{id}:
+    get:
+      tags:
+        - Game Platforms
       parameters:
         - name: id
           in: path

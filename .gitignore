@@ -80,3 +80,4 @@ dist
 
 # vscode debug configurations
 .vscode
+.editorconfig
