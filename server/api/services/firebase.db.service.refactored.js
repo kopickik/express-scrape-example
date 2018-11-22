@@ -1,5 +1,8 @@
 import l from '../../common/logger'
 
+const fs = require('fs')
+const Path = require('path')
+const Empty = require('empty-folder')
 const _ = require('lodash')
 const firebase = require('firebase')
 const axios = require('axios')
@@ -16,11 +19,17 @@ firebase.initializeApp({
 })
 
 const db = firebase.database();
-axios.defaults.baseURL = process.env.FIREBASE_DATABASE_URL
+axios.defaults.baseURL = process.env.IGDB_BASE_URL
+const axiosOptions = {
+  headers: {
+    accept: 'application/json',
+    'user-key': process.env.IGDB_USER_KEY
+  }
+}
 
 class FirebaseDatabase {
   all() {
-    return axios.get('games.json?print=pretty')
+    return axios.get('games', axiosOptions)
       .then(response => {
         l.info(response.data)
         return response
@@ -30,12 +39,10 @@ class FirebaseDatabase {
   }
 
   byId(id) {
-    return axios.get(`games/${id}.json?print=pretty`)
-      .then(response => {
-        l.info(response.data)
-        return response
-      })
+    return axios.get(`games/${id}`, axiosOptions)
       .then(response => response.data)
+      .then(data => _.first(data))
+      .then(game => this.pickGame(game))
       .catch(err => `Couldn't fetch game with id ${id}, ${err}`)
   }
 
@@ -49,6 +56,70 @@ class FirebaseDatabase {
     })
     return Promise.resolve(game)
   }
+
+  pickGame(game) {
+    const interested = _.pick(game, [
+      'name', 'slug', 'created_at', 'updated_at', 'summary',
+      'publishers', 'cover', 'screenshots', 'alternative_names', 'artworks'
+    ])
+    Empty(Path.resolve(__dirname, `../../../img/artworks`), false, o => o.error ? l.error(o.error) : l.info(`Artworks removed.`))
+    if (interested.artworks) {
+      _.map(interested.artworks, work => this.downloadArtwork(work.url))
+    }
+    if (interested.screenshots) {
+      _.map(interested.screenshots, work => this.downloadArtwork(work.url))
+    }
+    this.downloadImage(interested.cover.url)
+    return interested
+  }
+
+  platformImgGenerated(game) {
+    const url = game.cover.url;
+    const hiresUrl = url.replace(/t_thumb/, 't_720p')
+    this.downloadImage(hiresUrl)
+    return _.toPlainObject(game)
+  }
+
+  async downloadArtwork(url) {
+    let identifier = _.last(url.split('/'))
+    const path = Path.resolve(__dirname, `../../../img/artworks`, `prefix_${identifier}`)
+    const response = await axios({
+      method: `GET`,
+      url: `https:${url.replace(/t_thumb/, 't_720p')}`,
+      responseType: `stream`
+    })
+    response.data.pipe(fs.createWriteStream(path))
+    return new Promise((resolve, reject) => {
+      response.data.on('end', () => resolve())
+      response.data.on('error', (err) => reject(`Got error: ${err}`))
+    })
+
+  }
+
+  async downloadImage(url) {
+    const path = Path.resolve(__dirname, '../../../img', 'game.jpg')
+    const response = await axios({
+      method: 'GET',
+      url: `https:${url.replace(/t_thumb/, 't_720p')}`,
+      responseType: 'stream'
+    })
+
+    // pipe the result stream into a file on disc
+    response.data.pipe(fs.createWriteStream(path))
+
+    // return a promise and resolve when download finishes
+    return new Promise((resolve, reject) => {
+      response.data.on('end', () => {
+        resolve()
+      })
+
+      response.data.on('error', () => {
+        reject()
+      })
+    })
+  }
+
+
 }
 
 export default new FirebaseDatabase();

@@ -12,15 +12,19 @@
 
 ## GAMES
 
+- FF = 385
+- FFII = 387
+- FFIII = 393
+- FFIV = 399
+- FFV = 419
 - FFVI IS 426
 - FFVII is 427
 - FFVIII is 425
 - FFIX is 421
-- FFIV is 399
-- FFII is 387
-- FFIII is 393 (or is it 426?)
 - FFIV is 16587 (or is it 399?) it's 16587 I checked ;)
 - Super Metroid is 1103
 - MGS1 is 375 or 77231
 - MGS2 is [looks like its blocked away]
 - CT IS 1802
+- SOM IS 55092
+- Seiken Densetsu 3 is 11227

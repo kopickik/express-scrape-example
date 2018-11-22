@@ -81,3 +81,6 @@ dist
 # vscode debug configurations
 .vscode
 .editorconfig
+
+img
+img/artworks
