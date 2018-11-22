@@ -42,17 +42,17 @@ definitions:
       year:
         type: string
         example: "1994"
+      cover:
+        type: image
   GameEngine:
     type: object
     title: engine
-    required:
-      - name
     properties:
       name:
         type: string
-        example: Earthbound
+        example: Nintendo Entertainment System (NES)
       logo:
-        type: string
+        type: image
       logo.url:
         type: string
       logo.cloudinary_id:

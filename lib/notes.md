@@ -23,3 +23,4 @@
 - Super Metroid is 1103
 - MGS1 is 375 or 77231
 - MGS2 is [looks like its blocked away]
+- CT IS 1802
