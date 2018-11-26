@@ -1,6 +1,6 @@
 export class Controller {
   landing (req, res) {
-    res.render('index', { title: 'Customer Portal' });
+    res.render('entry', { title: 'Customer Portal' });
   }
 }
 export default new Controller();
