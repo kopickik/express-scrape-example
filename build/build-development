@@ -1,0 +1,5 @@
+#!/bin/bash
+
+stylus client/css/all.styl -o public/css --include-css --include client/css --watch &
+
+nodemon server --exec babel-node --config .nodemonrc.json | pino-pretty
