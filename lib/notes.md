@@ -26,5 +26,5 @@
 - MGS1 is 375 or 77231
 - MGS2 is [looks like its blocked away]
 - CT IS 1802
-- SOM IS 55092
+- SOM IS 3216 / (remake: 55092)
 - Seiken Densetsu 3 is 11227
