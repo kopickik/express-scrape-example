@@ -28,3 +28,4 @@
 - CT IS 1802
 - SOM IS 3216 / (remake: 55092)
 - Seiken Densetsu 3 is 11227
+- Earthbound is 78559
