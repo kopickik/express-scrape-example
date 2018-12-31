@@ -30,7 +30,7 @@
     "pino": "^5.8.0",
     "pug": "^2.0.3",
     "stylus": "^0.54.5",
-    "swagger-express-middleware": "^1.1.1"
+    "swagger-express-middleware": "^1.2.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.2",
@@ -40,11 +40,11 @@
     "babel-eslint": "^8.2.2",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
-    "eslint-plugin-import": "^2.14.0",
     "eslint-config-airbnb-base": "^11.3.2",
+    "eslint-plugin-import": "^2.14.0",
     "mocha": "^5.0.5",
-    "nodemon": "^1.18.4",
-    "pino-pretty": "^2.2.2",
+    "nodemon": "^1.18.7",
+    "pino-pretty": "^2.4.0",
     "supertest": "^3.0.0"
   },
   "author": "Kyle Kopicki <kyle.kopicki@gmail.com> (https://github.com/kopickik)"
