@@ -19,11 +19,11 @@ firebase.initializeApp({
 })
 
 const db = firebase.database();
-axios.defaults.baseURL = process.env.IGDB_BASE_URL
+axios.defaults.baseURL = process.env.IGDB_V3_BASE_URL
 const axiosOptions = {
   headers: {
     accept: 'application/json',
-    'user-key': process.env.IGDB_USER_KEY
+    'user-key': process.env.IGDB_V3_USER_KEY
   }
 }
 
