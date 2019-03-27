@@ -17,7 +17,7 @@
     }],
     "comma-dangle": "off",
     "semi":"off",
-    "quotes": ["warning", "backticks"],
+    "quotes": [1, "backticks"],
     "arrow-parens": ["error", "as-needed", {
       "requireForBlockBody": false
     }]
